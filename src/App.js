@@ -11,23 +11,32 @@ class App extends Component {
     super(props)
 
     this.state = {
-      storageValue: 0,
-      web3: null
+      web3: null,
     }
   }
 
+  componentWillMount() {
+    getWeb3.then(results => {
+      this.setState({
+        web3: results.web3
+      }).catch(() => {
+        console.log('Error finding web3.')
+      })
+    })
+  }
+
   render() {
+
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Truffle Box</a>
+            <a href="#" className="pure-menu-heading pure-menu-link">Ethereum Account Explorer</a>
         </nav>
 
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Good to Go!</h1>
-              <p>Your Truffle Box is installed and ready.</p>
+              {this.state.blocks}
             </div>
           </div>
         </main>
